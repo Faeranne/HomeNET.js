@@ -1,0 +1,25 @@
+{
+  "name": "homenet.js",
+  "version": "0.0.0",
+  "description": "Manage all your smarthome endpoints here",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.2.6",
+    "socket.io": "~0.9.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/blister75/node-homeserver.git"
+  },
+  "author": "Blixa Morgan <blixa@projectmakeit.com>",
+  "license": "GPLv3",
+  "readmeFilename": "README.md",
+  "gitHead": "94321da2c45bb1ad1539ae9e2252d2bcdf1b6848",
+  "bugs": {
+    "url": "https://github.com/blister75/node-homeserver/issues"
+  }
+}
