@@ -24,6 +24,7 @@
 Modules = getPlugins();
 event = require('events').EventEmitter;
 router = new event();
+router.setMaxListeners(0)
 
 function getPlugins(){
 	var output = {}
