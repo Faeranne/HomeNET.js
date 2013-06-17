@@ -20,27 +20,24 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-var express = require('express');
-var app = express();
-var io = require('socket.io').listen(require('http').createServer(app))
 
-var server = {control:{},device:{}}
+Modules = getPlugins();
+event = require('events').EventEmitter;
+router = new event();
 
-require('./plugins/light.js')(server);
-
-//var config = require('./config.js');
-
-app.use(express.logger());
-app.use(express.static(__dirname + '/public'));
-
-app.get('/',function(req,res){
-	res.send('Hello World');
-});
-
-io.sockets.on('connection', function(socket){
-	socket.on('RegServerList',function(data,cb){
-		cb(server);
+function getPlugins(){
+	var output = {}
+	require("fs").readdirSync("./plugins").forEach(function(file) {
+		if(file.split('.').pop()=='js'){
+			var temp = require("./plugins/" + file);
+			console.log('loading plugin '+file);
+			output[temp.name]=temp.module
+		}
 	});
-});
-app.listen(process.env.PORT||8080);
+	return output;
+}
 
+
+//Give us a repl to do some testing stuffs
+var repl = require('repl');
+repl.start({useGlobal:true});

@@ -14,39 +14,33 @@ A LOT!
 - [ ] control/monitor screen
 - [ ] endpoint protocol
 - [ ] basic plugins
-- [ ] basic device routing
+- [x] basic device routing - the router object handels this now.
 
 HomeNET.js is a Node.js server that manages configuring and controlling your smarthomes many avalible devices.  By using web technologies, the whole system can be controlled by your smartphone.
 
 Plugins:
 ----
-Plugins manage how a device is handled.  They can either be Input, Output or both.  They also have a list of avalible features.
-For example, A light is an output device with a state feature.  That state feature supports upto 2 states.  A Switch is an input device with a state feature.  that state feature can support many states.
-By using the site to link state to state, any input can control any output.  And they can be changed at any time.
+Plugins manage how a device is handled.  Devices can be physical, like lights or switches, or they can be virtual, like webpages or remotes.
+
+A plugin hosts a set of inputs and outputs.  When an output is called, the device will send an event on the router.  That event will be picked up by other devices in the system, which will respond by triggering their inputs.
+
+All devices can have inputs OR outputs.  Although they dont have to.
 
 Current plugins:
 
 - [ ] light
-- [ ] switch
+- [x] switch //Calling this done, for now.
+- [ ] website
+
 
 Website
 ----
 The website interface allows you to configure the system from any pc.  You can also manage the current state of any device, and adjust it.
+NOTE: code for the website does not exist yet!
 
-Change Log:
+TODO
 ====
-
-core:
-----
-v0.0.0
-Inital commit.  Does not actualy do anything yet.
-
-
-plugins:
-----
-light.js
-     v0.0.0
-     Initial commit. Needs to be re-written. don't like the structor.
+- [ ] Write a universal device, which can be inhereted and extended on.
 
 Licence
 ====
