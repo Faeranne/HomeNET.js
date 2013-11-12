@@ -22,9 +22,19 @@
 
 
 Modules = getPlugins();
+Devices = {};
 event = require('events').EventEmitter;
 router = new event();
 router.setMaxListeners(0)
+router.send=function(command,from){
+	this.emit('send',{command:command,from:from});
+}
+router.tell=function(command,to){
+	this.emit('send',{command:command,to:to});
+}
+router.listenTo=function(reciever,sender){
+	Devices[reciever].startListen(id);
+}
 
 function getPlugins(){
 	var output = {}
@@ -38,7 +48,13 @@ function getPlugins(){
 	return output;
 }
 
-
+ConnectDevice = function(id,type){
+	if(Devices[id]){
+		return "Failed. Device already exists"
+	}
+	Devices[id]=new Modules[type](id,router);
+}
 //Give us a repl to do some testing stuffs
 var repl = require('repl');
 repl.start({useGlobal:true});
+kit = new Modules.wall_switch('5',router)

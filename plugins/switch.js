@@ -26,6 +26,30 @@
 
 
 module.exports.module = function(id,router){
+		//include the following lines in each device.  They make it work.
+		//TODO: move these to a seperate, inheritable file
+		this.watching=[]
+		this.id=id;
+		this.router=router;
+		var myself = this;
+		router.on('send',function(event){
+			if(myself.watching.indexOf(event.from)>=0||event.to==myself.id){
+				try{
+					myself.inputs[event.command]()//we dont nessesarly understand the command.  if we dont have it, throw it away.
+				}catch(e){
+				}
+			}
+		})
+		this.startListen = function(id){
+			myself.watching.push(id);
+		}
+		this.stopListen = function(id){
+			var index = myself.watching.indexOf(event.from);
+			if(index>=0){
+				myself.watching.split(index,1);
+			}
+		}
+		//end common code
 		this.inputs = {
 			On:function(){
 				//device.send(1);
@@ -38,33 +62,14 @@ module.exports.module = function(id,router){
 		}
 		this.outputs = {
 			On:function(){
-				myself.send('On');
+				router.send('On',myself.id);
 			},
 			Off:function(){
-				myself.send('Off');
+				router.send('Off',myself.id);
 			}
 		}
-		//include the following lines in each device.  They make it work.
-		//TODO: move these to a seperate, inheritable file.
-		this.watching=[]
-		this.id=id;
-		this.router=router;
-		var myself = this;
-		router.on('send',function(event){
-			console.log(myself.watching.indexOf(event.from))
-			if(myself.watching.indexOf(event.from)>=0||event.to==myself.id){
-				try{
-					myself.inputs[event.command]()//we dont nessesarly understand the command.  if we dont have it, throw it away.
-				}catch(e){
-				}
-			}
-		})
-		this.send=function(command){
-			myself.router.emit('send',{from:myself.id,command:command});
-		}
+
 	}
 
 module.exports.name = 'wall_switch'
-
-	
 		
